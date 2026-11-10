@@ -19,7 +19,7 @@ jobs:
         with:
           script: |
             const event = context.payload;
-            console.log(JSON.stringify(event));
+            console.log(event);
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Set up Node.js
