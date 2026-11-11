@@ -43,7 +43,7 @@ jobs:
       - name: Build application
         run: npm run build
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: build-artifact
           path: dist/
@@ -54,7 +54,7 @@ jobs:
       - name: Get Code
         uses: actions/checkout@v7
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v8
         with:
           name: build-artifact
           path: dist/
