@@ -26,6 +26,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      js-file: ${{ steps.publish.outputs.js-file }}
     steps:
       - name: Get Code
         uses: actions/checkout@v7
@@ -40,6 +42,9 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
+      - name: Publish Js files
+        id: publish
+        run: find dist/assets/*.js -type f -execdir echo 'js-file={}' >> $GITHUB_OUTPUT ';'
       - name: Build application
         run: npm run build
       - name: Upload artifact
@@ -57,7 +62,8 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: build-artifact
-          path: dist/
+      - name: Output Js files
+        run: echo "${{ needs.build.outputs.js-file }}"
       - name: Output artifact contents
         run: ls
       - name: Deploy application
